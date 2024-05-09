@@ -2,10 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, Route, RouterProvider, Routes} from "react-router-dom";
-import Home from './routes/Home';
+import Home from './routes/home';
 import ErrorPage from "./errorPage"
-import Login from "./routes/Login"
-import Example from "./routes/Example"
+import Login from "./routes/login"
+import Example from "./routes/example"
+import TodoProvider from '../../providers/TodoProvider/TodoProvider';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <TodoProvider>
+      <RouterProvider router={router} />
+    </TodoProvider>
   </React.StrictMode>
 );
