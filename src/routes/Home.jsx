@@ -12,7 +12,7 @@ export default function Home() {
     <Form>
       <label htmlFor="title">Title:</label>
       <input type="text" name="titme" id="title" required value={title} onChange={(event) => setTile(event.target.value)}></input>
-      <button type="submit" onClick={(event) => setTodo(event, title)} >Create todo</button>
+      <Button type="submit" onClick={(event) => setTodo(event, title)} >Create todo</Button>
     </Form>
   </Wrapper>;
 
@@ -25,4 +25,6 @@ export default function Home() {
 const Wrapper = styled.div``;
 
 const Form = styled.form``;
+
+const Button = styled.button``
 
