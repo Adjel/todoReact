@@ -7,9 +7,11 @@ export default function home() {
   const [title, setTitle] = useState("")
   return <Wrapper>
     <div>
-      {todos.map(({id, title, createdAt, completed}) => (
-        <div key={id}>{title}{completed}</div>
-      ))}
+      {todos.map(({id, title, createdAt, completed}) => 
+        
+        (<div key={id}>{title}{completed} {new Date(createdAt * 1000).toLocaleString()}</div>)
+  
+      )}
     </div>
     <Form>
       <label htmlFor="title">Title:</label>
