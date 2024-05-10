@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, Route, RouterProvider, Routes} from "react-router-dom";
-import Home from './routes/home';
+import Home from './routes/Home/Home';
 import ErrorPage from "./errorPage"
 import Login from "./routes/login"
 import Example from "./routes/example"
