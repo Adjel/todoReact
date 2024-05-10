@@ -18,8 +18,8 @@ export default function Home() {
       <label htmlFor="email">Email:</label>
       <input type="email" name="email" id="email" required value={email} onChange={(event) => setEmail(event.target.value)}></input>
       <label htmlFor="password">Password:</label>
-      <input type="text" name="password" id="password" required value={password} onChange={(event) => setPassword(event.target.value)}></input>
-      <AuthButton type="submit" onClick={(event) => handleAuthentication(event, email, password)} >{isAuth ? "SE DECONNECTER" : "SE CONNECTER" }</AuthButton>
+      <input type="password" name="password" id="password" required value={password} onChange={(event) => setPassword(event.target.value)}></input>
+      <AuthButton type="submit" onClick={(event) => login(event, email, password)} >{isAuth ? "SE DECONNECTER" : "SE CONNECTER" }</AuthButton>
     </Form>
     <AuthButton >LOG OUT</AuthButton>
     </HeaderWrapper>
@@ -44,6 +44,11 @@ export default function Home() {
     event.preventDefault();
     handleTodoInput(title)
   }
+
+  function login(event, email, password) {
+    event.preventDefault()
+    handleAuthentication(email, password)
+  } 
 }
 
 
