@@ -39,11 +39,6 @@ function TodoProvider({children}) {
               });
             });
             
-            console.log(allTodos[0].title)
-            console.log(allTodos.map((todo) => {
-              todo
-            }))
-
             setTodos(allTodos);
           });
           
@@ -68,7 +63,6 @@ function TodoProvider({children}) {
         })
       }
 
-      
     const handleDelete = async (todoId) => {
           const todoRef = doc(db, "users", userId, "todos", todoId)
           await deleteDoc(todoRef);
