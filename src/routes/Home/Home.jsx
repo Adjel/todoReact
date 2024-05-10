@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components"
-import { TodoContext } from "../../../../providers/TodoProvider/TodoProvider";
+import { TodoContext } from "../../providers/TodoProvider/TodoProvider";
 
 export default function Home() {
   const { todos, handleTodoInput, } = useContext(TodoContext);

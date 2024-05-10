@@ -6,7 +6,7 @@ import Home from './routes/Home/Home';
 import ErrorPage from "./errorPage"
 import Login from "./routes/login"
 import Example from "./routes/example"
-import TodoProvider from '../../providers/TodoProvider/TodoProvider';
+import TodoProvider from "./providers/TodoProvider/TodoProvider"
 
 const router = createBrowserRouter([
   {
