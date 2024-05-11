@@ -1,7 +1,6 @@
 import React, { useState, createContext, useEffect } from "react";
 import {db, collection, addDoc, serverTimestamp, onSnapshot} from "../../Firebase"
 
-
 export const TodoContext = createContext();
 
 function TodoProvider({children}) {

@@ -30,6 +30,7 @@ export default function Home() {
       { !isAuth ? <AuthButton type="submit" onClick={(event) => login(event, email, password)} >"SE CONNECTER"</AuthButton> : undefined }
     </Form>
       { isAuth ? <AuthButton onClick={signOut} >"SE DECONNECTER"</AuthButton> : undefined }
+      <a href="/signin">No account ? Sign In</a>
     </HeaderWrapper>
     <TodoWrapper>
 

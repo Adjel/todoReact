@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import { createBrowserRouter, Route, RouterProvider, Routes} from "react-router-dom";
+import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import ErrorPage from "./errorPage"
 import Login from "./routes/login"
+import SignIn from "./routes/SignInComponent"
 import Example from "./routes/example"
 import TodoProvider from "./providers/TodoProvider/TodoProvider"
 import UserProvider from './providers/UserProvider/UserProvider';
@@ -23,14 +24,18 @@ const router = createBrowserRouter([
     path: "example/:exampleId",
     element: <Example />,
   },
+  {
+    path: "signin",
+    element: <SignIn />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
       <UserProvider>
-    <TodoProvider>
-      <RouterProvider router={router} />
-    </TodoProvider>
+        <TodoProvider>
+          <RouterProvider router={router} />
+        </TodoProvider>
       </UserProvider>
   </React.StrictMode>
 );
