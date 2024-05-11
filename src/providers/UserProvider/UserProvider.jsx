@@ -27,6 +27,7 @@ export default function UserProvider({children}) {
         .then(() => {
         // Sign-out successful.
         console.log("logged out")
+        setIsAuth(false)
         })
         .catch((error) => {
         // An error happened.
