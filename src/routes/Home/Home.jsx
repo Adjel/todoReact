@@ -1,14 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components"
 import { TodoContext } from "../../providers/TodoProvider/TodoProvider";
 import { UserContext } from "../../providers/UserProvider/UserProvider";
 
 export default function Home() {
   const { todos, handleTodoInput, } = useContext(TodoContext);
-  const {isAuth, handleAuthentication, profile} = useContext(UserContext)
+  const {isAuth, handleAuthentication, profile, LogOut} = useContext(UserContext)
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  // We need to reset inputs only if user is connected
+  useEffect(() => {
+    if (isAuth) {
+      setEmail("")
+      setPassword("")
+    }
+  }, [isAuth])
 
   const [title, setTitle] = useState("")
   return <Wrapper>
@@ -19,9 +27,9 @@ export default function Home() {
       <input type="email" name="email" id="email" required value={email} onChange={(event) => setEmail(event.target.value)}></input>
       <label htmlFor="password">Password:</label>
       <input type="password" name="password" id="password" required value={password} onChange={(event) => setPassword(event.target.value)}></input>
-      <AuthButton type="submit" onClick={(event) => login(event, email, password)} >{isAuth ? "SE DECONNECTER" : "SE CONNECTER" }</AuthButton>
+      { !isAuth ? <AuthButton type="submit" onClick={(event) => login(event, email, password)} >"SE CONNECTER"</AuthButton> : undefined }
     </Form>
-    <AuthButton >LOG OUT</AuthButton>
+      { isAuth ? <AuthButton onClick={signOut} >"SE DECONNECTER"</AuthButton> : undefined }
     </HeaderWrapper>
     <TodoWrapper>
 
@@ -48,7 +56,12 @@ export default function Home() {
   function login(event, email, password) {
     event.preventDefault()
     handleAuthentication(email, password)
-  } 
+
+  }   
+
+  function signOut() {
+    LogOut()
+  }
 }
 
 
