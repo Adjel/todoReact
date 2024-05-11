@@ -19,6 +19,9 @@ export default function UserProvider({children}) {
             .catch((error) => {
                 console.log(error)
                 console.log({error})
+                if(error.code === "auth/invalid-credential") {
+                    console.log("email ou mot de passe invalide")
+                }
             })
     }
 
@@ -33,5 +36,25 @@ export default function UserProvider({children}) {
         // An error happened.
         });
     }
-    return( <UserContext.Provider value={{profile, isAuth, handleAuthentication, LogOut}}>{children}</UserContext.Provider>)
+
+    const SignIn = (email, password) => {
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+        // Signed up 
+        const user = userCredential.user;
+        setIsAuth(true)
+        // ...
+        })
+        .catch((error) => {
+            console.log(error.code);
+            const code = error.code
+            console.log({code});
+            console.log(error.message);
+            const message = error.message
+            console.log({message});
+        // ..
+        });
+    }
+
+    return( <UserContext.Provider value={{profile, isAuth, handleAuthentication, LogOut, SignIn}}>{children}</UserContext.Provider>)
 }
