@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { TodoContext } from "../../providers/TodoProvider/TodoProvider";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 

@@ -1,5 +1,5 @@
 import React from "react"
-import ErrorPage from "./errorPage"
+import ErrorPage from "./ErrorPage"
 import SignIn from "./SignInComponent"
 import Example from "./Example"
 import Todos from "./Todos"
