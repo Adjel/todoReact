@@ -10,15 +10,15 @@ import { createBrowserRouter } from "react-router-dom";
 const PageRouter = createBrowserRouter([
     {
       path: "/",
-      element: <Home/>,
+      element: <Login/>,
       errorElement: <ErrorPage/>,
     },
     {
-      path: "Todos/",
+      path: "/Todos",
       element: <Todos/>,
     },
     {
-      path: "Login",
+      path: "/Login",
       element: <Login />,
     },
     {
@@ -26,7 +26,7 @@ const PageRouter = createBrowserRouter([
       element: <Example />,
     },
     {
-      path: "Signin/",
+      path: "/Signin",
       element: <SignIn />,
     },
   ]);

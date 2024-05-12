@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../providers/UserProvider/UserProvider";
+import { useNavigate } from 'react-router-dom';
+import styled from "styled-components";
 
 export default function Login() {
   const [email, setEmail] = useState("")
@@ -8,11 +9,13 @@ export default function Login() {
   
   const {isAuth, handleAuthentication, profile, LogOut} = useContext(UserContext)
 
+      // can't use navigate inside useEffect
+      const navigate = useNavigate();
+
   // We need to reset inputs only if user is connected
   useEffect(() => {
     if (isAuth) {
-      setEmail("")
-      setPassword("")
+      navigate('/Todos');
     }
   }, [isAuth])
 
@@ -27,7 +30,7 @@ export default function Login() {
       { !isAuth ? <button type="submit" onClick={(event) => login(event, email, password)} >"SE CONNECTER"</button> : undefined }
     </Form>
       { isAuth ? <button onClick={signOut} >"SE DECONNECTER"</button> : undefined }
-      <a href="/signin">No account ? Sign In</a>
+      <a href="/Signin">No account ? Sign In</a>
     </HeaderWrapper>
   </Wrapper>);
 

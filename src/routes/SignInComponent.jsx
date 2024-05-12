@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../providers/UserProvider/UserProvider'
 import { useNavigate } from 'react-router-dom';
+import styled from "styled-components";
 
 export default function SignInComponent() {
     const [signInUser, setSignInUser] = useState({
@@ -14,7 +15,7 @@ export default function SignInComponent() {
 
     useEffect(() => {
         if (isAuth) {
-            navigate('Todos/');
+            navigate('/Todos');
         }
     }, [isAuth])
 
@@ -35,14 +36,20 @@ export default function SignInComponent() {
 
     return (
         <>
-            <form>
+            <Form>
               <label htmlFor="email">email: </label>
               <input type='email' id='email' name='email' value={signInUser.email} required onChange={(event) => handlOnChange(event)}></input>
               <label htmlFor="password">password :</label>
               <input type='password' id='password' name='password' value={signInUser.password} required onChange={(event) => handlOnChange(event)}></input>
               <button type='submit' onClick={(event) => handleOnSubmit(event)}>Sign in</button>
-            </form>
-            <a href='login/'>Already an account ? Log in</a>
+            </Form>
+            <a href='/Login'>Already an account ? Log in</a>
         </>
     )
 }
+
+const Form = styled.form`
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+align-items: center;`
