@@ -55,7 +55,7 @@ export default function Todos() {
         <input type="checkbox" name="isCompleted" id="isCompleted" checked={todo.isCompleted} onChange={(event) => createTodo(event)}/>
         <button type="submit" onClick={(event) => handleTodo(event)} >Create todo</button>
       </Form>
-      { isAuth ? <button onClick={signOut} >"SE DECONNECTER"</button> : undefined }
+      { isAuth && <button onClick={signOut} >"SE DECONNECTER"</button>}
       <a href="/Signin">No account ? Sign In</a>
       </TodoWrapper>
     )
