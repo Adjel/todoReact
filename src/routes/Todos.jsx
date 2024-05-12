@@ -1,11 +1,20 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { TodoContext } from "../providers/TodoProvider/TodoProvider";
+import { UserContext } from "../providers/UserProvider/UserProvider";
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components"
 
 export default function Todos() {
     const [title, setTitle] = useState("")
 
     const { todos, handleTodoInput, } = useContext(TodoContext);
+    const { isAuth } = useContext(UserContext)
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      if (!isAuth) navigate("/login")
+    }, [isAuth])
   
     function setTodo(event, title) {
       event.preventDefault();
