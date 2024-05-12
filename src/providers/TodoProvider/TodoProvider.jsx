@@ -1,5 +1,5 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
-import {db, collection, addDoc, serverTimestamp, onSnapshot} from "../../Firebase"
+import {db, collection, addDoc, serverTimestamp, onSnapshot, doc, deleteDoc, updateDoc} from "../../Firebase"
 import { UserContext } from "../UserProvider/UserProvider";
 
 export const TodoContext = createContext();
@@ -66,16 +66,18 @@ function TodoProvider({children}) {
         await updateDoc(todoRef, {
           completed: !!status // smart way of converting any type to type Boolean
         })
-      }
+    }
 
     const handleDelete = async (todoId) => {
           const todoRef = doc(db, "users", user.uid, "todos", todoId)
           await deleteDoc(todoRef);
           
+          /*
           // Remove the 'capital' field from the document
           await updateDoc(todoRef, {
           completed: deleteField()
           });
+          */
     }
 
 

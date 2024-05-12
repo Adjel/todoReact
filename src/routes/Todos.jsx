@@ -3,6 +3,7 @@ import { TodoContext } from "../providers/TodoProvider/TodoProvider";
 import { UserContext } from "../providers/UserProvider/UserProvider";
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components"
+import TodoCompoennt from "../Components/TodoComponent/TodoComponent";
 
 export default function Todos() {
     const [todo, setTodo] = useState({
@@ -22,6 +23,10 @@ export default function Todos() {
     function handleTodo(event) {
       event.preventDefault();
       handleTodoInput(todo)
+      setTodo({
+        title: "",
+        isCompleted: false
+      })
     }
 
     function signOut() {
@@ -39,8 +44,8 @@ export default function Todos() {
     return (
       <TodoWrapper>
       <div>
-        {todos.map(({id, title, createdAt, isCompleted}) =>    
-        (<div key={id}>{title}{isCompleted} {new Date(createdAt * 1000).toLocaleString()}</div>)
+        {todos.map(({id, title, createdAt, completed}) =>    
+        <TodoCompoennt key={id} todoId={id} title={title} createdAt={createdAt} completed={completed}/>
       )}
       </div>
       <Form>
