@@ -2,6 +2,9 @@ import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../providers/UserProvider/UserProvider";
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function Login() {
   const [email, setEmail] = useState("")
@@ -19,10 +22,14 @@ export default function Login() {
     }
   }, [isAuth])
 
+  const notify = (toastMessage) => toast(`${toastMessage}`, {
+    autoClose: 5000,
+    hideProgressBar: true,
+  })
 
-  function login(event, email, password) {
+  async function login(event) {
     event.preventDefault()
-    handleAuthentication(email, password)
+    await handleAuthentication(email, password, notify)
   }  
 
   return (<Wrapper>
@@ -33,9 +40,11 @@ export default function Login() {
       <input type="email" name="email" id="email" required value={email} onChange={(event) => setEmail(event.target.value)}></input>
       <label htmlFor="password">Password:</label>
       <input type="password" name="password" id="password" required value={password} onChange={(event) => setPassword(event.target.value)}></input>
-      { !isAuth ? <button type="submit" onClick={(event) => login(event, email, password)} >"SE CONNECTER"</button> : undefined }
+      <button type="submit" onClick={(event) => login(event, email, password)} >"SE CONNECTER"</button>
     </Form>
+    <a href='/signin'>Not have an account ? Sign in</a>
     </HeaderWrapper>
+    <ToastContainer></ToastContainer>
   </Wrapper>); 
 }
 
