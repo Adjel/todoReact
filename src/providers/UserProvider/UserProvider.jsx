@@ -5,15 +5,15 @@ import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signO
 export const UserContext = createContext()
 
 export default function UserProvider({children}) {
-    const [profile, setProfile] = useState("")
+    const [user, setUser] = useState("")
     const [isAuth, setIsAuth] = useState(false)
 
     const handleAuthentication = (email, password) => {
             signInWithEmailAndPassword(auth, email, password) 
             .then((userCredential) => {
-                console.log(userCredential)
-                console.log({userCredential})
-                setIsAuth(true);
+                const user = userCredential.user;
+                setIsAuth(true)
+                setUser(user)
                 console.log("AUTH TRUE")
             })
             .catch((error) => {
@@ -43,6 +43,7 @@ export default function UserProvider({children}) {
         // Signed up 
         const user = userCredential.user;
         setIsAuth(true)
+        setUser(user)
         // ...
         })
         .catch((error) => {
@@ -56,5 +57,5 @@ export default function UserProvider({children}) {
         });
     }
 
-    return( <UserContext.Provider value={{profile, isAuth, handleAuthentication, LogOut, SignIn}}>{children}</UserContext.Provider>)
+    return( <UserContext.Provider value={{user, isAuth, handleAuthentication, LogOut, SignIn}}>{children}</UserContext.Provider>)
 }
