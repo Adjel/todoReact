@@ -4,6 +4,8 @@ import { UserContext } from "../providers/UserProvider/UserProvider";
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components"
 import TodoCompoennt from "../Components/TodoComponent/TodoComponent";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Todos() {
     const [todo, setTodo] = useState({
@@ -16,17 +18,31 @@ export default function Todos() {
 
     const navigate = useNavigate();
 
+    const notify = (toastMessage) => toast(`${toastMessage}`, {
+      autoClose: 5000,
+      hideProgressBar: true,
+    })
+
     useEffect(() => {
       if (!isAuth) navigate("/login")
     }, [isAuth])
   
     function handleTodo(event) {
       event.preventDefault();
-      handleTodoInput(todo)
-      setTodo({
-        title: "",
-        isCompleted: false
-      })
+      if (!handleTodoError()) {
+        handleTodoInput(todo)
+        setTodo({
+          title: "",
+          isCompleted: false
+        })
+      }
+    }
+
+    function handleTodoError() {
+      if (todo.title === "" || todos.find((todo) => todo.title === todo.title)) {
+        notify("The todo must have a title and not already exist")
+        return true
+      }
     }
 
     function signOut() {
@@ -45,7 +61,7 @@ export default function Todos() {
       <TodoWrapper>
       <div>
         {todos.map(({id, title, createdAt, completed}) =>    
-        <TodoCompoennt key={id} todoId={id} title={title} createdAt={createdAt} completed={completed}/>
+        <TodoCompoennt key={id} todoId={id} title={title} createdAt={createdAt} completed={completed} notify={notify}/>
       )}
       </div>
       <Form>
@@ -56,7 +72,7 @@ export default function Todos() {
         <button type="submit" onClick={(event) => handleTodo(event)} >Create todo</button>
       </Form>
       { isAuth && <button onClick={signOut} >"SE DECONNECTER"</button>}
-      <a href="/Signin">No account ? Sign In</a>
+      <ToastContainer/>
       </TodoWrapper>
     )
   }

@@ -10,10 +10,9 @@ function TodoProvider({children}) {
     const {isAuth, user} = useContext(UserContext);
 
     
-    const handleTodoInput = async ({title, isCompleted}) => {
+    const handleTodoInput = async ({title, isCompleted}, notify) => {
 
-      console.log()
- 
+      try {
         // Add an object to the db
         const todosRef = collection(db, "users", user.uid, "todos")
         const todoRef = await addDoc(todosRef, {
@@ -21,6 +20,9 @@ function TodoProvider({children}) {
           title: title,
           createdAt: serverTimestamp()
         });
+      }catch(error) {
+        notify(error.code)
+      }
    
         
       console.log(`Todo created with id: ${todoRef.id}`)
