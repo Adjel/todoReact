@@ -1,32 +1,35 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useEffect, useContext } from "react";
 import {db, collection, addDoc, serverTimestamp, onSnapshot} from "../../Firebase"
+import { UserContext } from "../UserProvider/UserProvider";
 
 export const TodoContext = createContext();
 
 function TodoProvider({children}) {
-    // const {userId} = useContext(userContext);
     const [todos, setTodos] = useState([]);
 
-    const handleTodoInput = async (value) => {
-      // Add an object to the db
-      const todosRef = collection(db, "todos")
-      const todoRef = await addDoc(todosRef, {
-          completed: false,
-          title: value,
+    const {isAuth, user} = useContext(UserContext);
+
+    
+    const handleTodoInput = async (title, isCompleted) => {
+ 
+        // Add an object to the db
+        const todosRef = collection(db, "users", user.uid, "todos")
+        const todoRef = await addDoc(todosRef, {
+          completed: isCompleted,
+          title: title,
           createdAt: serverTimestamp()
-      });
-
-
-      setTodos(value); // updates state
-
+        });
+   
+        
       console.log(`Todo created with id: ${todoRef.id}`)
   }
 
     // keep values updated
     useEffect(() => {
-      try {
-       
-          const todosRef = collection(db, "todos");
+
+      if (isAuth) {
+        try {
+          const todosRef = collection(db, "users", user.uid, "todos")
           
           const unsubscribe = onSnapshot(todosRef, (querySnapshot) => {
             const allTodos = [];
@@ -37,25 +40,26 @@ function TodoProvider({children}) {
                 ...doc.data()
               });
             });
-            
+          
             setTodos(allTodos);
           });
           
           return () => {
             unsubscribe(); // when component unmounts
           };
-     
-      } catch (e) {
-        throw new Error(`${e} impossible to get data in TodoProvider`)
+          
+        } catch (e) {
+          throw new Error(`${e} impossible to get data in TodoProvider`)
+        }
+        
       }
-      
-      //}, [show])
-      }, []);
+        //}, [show])
+      }, [isAuth]);
 
 
     // update todos
     const handleToggleComplete = async (todoId, status) => {
-        const todoRef = doc(db, "users", userId, "todos", todoId)
+        const todoRef = doc(db, "users", user.uid, "todos", todoId)
       
         await updateDoc(todoRef, {
           completed: !!status // smart way of converting any type to type Boolean
@@ -63,7 +67,7 @@ function TodoProvider({children}) {
       }
 
     const handleDelete = async (todoId) => {
-          const todoRef = doc(db, "users", userId, "todos", todoId)
+          const todoRef = doc(db, "users", user.uid, "todos", todoId)
           await deleteDoc(todoRef);
           
           // Remove the 'capital' field from the document

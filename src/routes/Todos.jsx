@@ -6,7 +6,8 @@ import styled from "styled-components"
 
 export default function Todos() {
     const [title, setTitle] = useState("")
-
+    const [isCompleted, setIscompleted] = useState(false)
+ 
     const { todos, handleTodoInput, } = useContext(TodoContext);
     const { isAuth } = useContext(UserContext)
 
@@ -16,23 +17,44 @@ export default function Todos() {
       if (!isAuth) navigate("/login")
     }, [isAuth])
   
-    function setTodo(event, title) {
+    function handleTodo(event) {
       event.preventDefault();
-      handleTodoInput(title)
+      handleTodoInput(title, isCompleted)
+    }
+
+    function signOut() {
+      LogOut()
+    }
+
+    function handleTitle(event) {
+      event.preventDefault()
+      setTitle(event.target.value)
+    }
+  
+    function handleIscompleted(event) {
+      console.log(isCompleted)
+      console.log(event.target.checked)
+      console.log(event.target.value)
+
+      setIscompleted(event.target.checked)
     }
   
     return (
       <TodoWrapper>
       <div>
-        {todos.map(({id, title, createdAt, completed}) =>    
-        (<div key={id}>{title}{completed} {new Date(createdAt * 1000).toLocaleString()}</div>)
+        {todos.map(({id, title, createdAt, isCompleted}) =>    
+        (<div key={id}>{title}{isCompleted} {new Date(createdAt * 1000).toLocaleString()}</div>)
       )}
       </div>
       <Form>
         <label htmlFor="title">Title:</label>
-        <input type="text" name="title" id="title" required value={title} onChange={(event) => setTitle(event.target.value)}></input>
-        <button type="submit" onClick={(event) => setTodo(event, title)} >Create todo</button>
+        <input type="text" name="title" id="title" required value={title} onChange={(event) => handleTitle(event)}></input>
+        <label htmlFor="isCompleted">Completed:</label>
+        <input type="checkbox" name="isCompleted" id="isCompleted" checked={isCompleted} onChange={(event) => handleIscompleted(event)}/>
+        <button type="submit" onClick={(event) => handleTodo(event)} >Create todo</button>
       </Form>
+      { isAuth ? <button onClick={signOut} >"SE DECONNECTER"</button> : undefined }
+      <a href="/Signin">No account ? Sign In</a>
       </TodoWrapper>
     )
   }
@@ -41,7 +63,8 @@ export default function Todos() {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;`
+  align-items: center;
+  gap: ${90/16}rem`
   
   const Form = styled.form`
   display: flex;
