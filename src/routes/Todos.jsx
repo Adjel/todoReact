@@ -5,8 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from "styled-components"
 
 export default function Todos() {
-    const [title, setTitle] = useState("")
-    const [isCompleted, setIscompleted] = useState(false)
+    const [todo, setTodo] = useState({
+      title: "",
+      isCompleted: false 
+    })
  
     const { todos, handleTodoInput, } = useContext(TodoContext);
     const { isAuth } = useContext(UserContext)
@@ -19,24 +21,19 @@ export default function Todos() {
   
     function handleTodo(event) {
       event.preventDefault();
-      handleTodoInput(title, isCompleted)
+      handleTodoInput(todo)
     }
 
     function signOut() {
       LogOut()
     }
 
-    function handleTitle(event) {
-      event.preventDefault()
-      setTitle(event.target.value)
-    }
-  
-    function handleIscompleted(event) {
-      console.log(isCompleted)
-      console.log(event.target.checked)
-      console.log(event.target.value)
-
-      setIscompleted(event.target.checked)
+    function createTodo(event) {
+      const { name, value, checked} = event.target
+      setTodo({
+        ...todo,
+        [name]: name !== "isCompleted" ? value : checked
+      })
     }
   
     return (
@@ -48,9 +45,9 @@ export default function Todos() {
       </div>
       <Form>
         <label htmlFor="title">Title:</label>
-        <input type="text" name="title" id="title" required value={title} onChange={(event) => handleTitle(event)}></input>
+        <input type="text" name="title" id="title" required value={todo.title} onChange={(event) => createTodo(event)}></input>
         <label htmlFor="isCompleted">Completed:</label>
-        <input type="checkbox" name="isCompleted" id="isCompleted" checked={isCompleted} onChange={(event) => handleIscompleted(event)}/>
+        <input type="checkbox" name="isCompleted" id="isCompleted" checked={todo.isCompleted} onChange={(event) => createTodo(event)}/>
         <button type="submit" onClick={(event) => handleTodo(event)} >Create todo</button>
       </Form>
       { isAuth ? <button onClick={signOut} >"SE DECONNECTER"</button> : undefined }

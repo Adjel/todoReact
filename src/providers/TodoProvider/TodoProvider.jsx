@@ -10,7 +10,9 @@ function TodoProvider({children}) {
     const {isAuth, user} = useContext(UserContext);
 
     
-    const handleTodoInput = async (title, isCompleted) => {
+    const handleTodoInput = async ({title, isCompleted}) => {
+
+      console.log()
  
         // Add an object to the db
         const todosRef = collection(db, "users", user.uid, "todos")
