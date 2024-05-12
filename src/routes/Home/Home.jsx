@@ -9,5 +9,5 @@ export default function Home() {
 
   useEffect(() => {
     navigate(isAuth ? "Todos/" : "Login/")
-  })
+  }, [])
 }

@@ -1,10 +1,10 @@
 import React from "react"
 import ErrorPage from "./errorPage"
-import Login from "./Login"
 import SignIn from "./SignInComponent"
 import Example from "./Example"
 import Home from './Home/Home';
 import Todos from "./Todos"
+import Login from "./Login"
 import { createBrowserRouter } from "react-router-dom";
 
 const PageRouter = createBrowserRouter([
@@ -18,7 +18,7 @@ const PageRouter = createBrowserRouter([
       element: <Todos/>,
     },
     {
-      path: "Login/",
+      path: "Login",
       element: <Login />,
     },
     {
