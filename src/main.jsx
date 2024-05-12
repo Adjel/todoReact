@@ -1,40 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import { createBrowserRouter, RouterProvider} from "react-router-dom";
-import ErrorPage from "./errorPage"
-import Login from "./routes/login"
-import SignIn from "./routes/SignInComponent"
-import Example from "./routes/example"
+import { RouterProvider} from "react-router-dom";
 import TodoProvider from "./providers/TodoProvider/TodoProvider"
 import UserProvider from './providers/UserProvider/UserProvider';
-import Home from './routes/Home/Home';
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home/>,
-    errorElement: <ErrorPage/>,
-  },
-  {
-    path: "login/",
-    element: <Login />,
-  },
-  {
-    path: "example/:exampleId",
-    element: <Example />,
-  },
-  {
-    path: "signin",
-    element: <SignIn />,
-  },
-]);
+import PageRouter from './routes/PageRouter';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
       <UserProvider>
         <TodoProvider>
-          <RouterProvider router={router} />
+          <RouterProvider router={PageRouter} />
         </TodoProvider>
       </UserProvider>
   </React.StrictMode>
