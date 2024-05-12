@@ -14,7 +14,7 @@ export default function SignInComponent() {
 
     useEffect(() => {
         if (isAuth) {
-            navigate('/');
+            navigate('Todos/');
         }
     }, [isAuth])
 
