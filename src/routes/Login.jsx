@@ -7,7 +7,7 @@ export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   
-  const {isAuth, handleAuthentication, user, LogOut} = useContext(UserContext)
+  const {isAuth, handleAuthentication} = useContext(UserContext)
 
       // can't use navigate inside useEffect
       const navigate = useNavigate();

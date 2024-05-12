@@ -11,7 +11,7 @@ export default function Todos() {
     })
  
     const { todos, handleTodoInput, } = useContext(TodoContext);
-    const { isAuth } = useContext(UserContext)
+    const { isAuth, LogOut} = useContext(UserContext)
 
     const navigate = useNavigate();
 
