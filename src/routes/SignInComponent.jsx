@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../providers/UserProvider/UserProvider'
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignInComponent() {
     const [signInUser, setSignInUser] = useState({
@@ -19,6 +21,11 @@ export default function SignInComponent() {
         }
     }, [isAuth])
 
+    const notify = (toastMessage) => toast(`${toastMessage}`, {
+        autoClose: 5000,
+        hideProgressBar: true,
+      })
+
     function handlOnChange(event) {
         const { name, value } = event.target
         setSignInUser({
@@ -27,11 +34,9 @@ export default function SignInComponent() {
         })
     }
 
-    function handleOnSubmit(event) {
+    async function handleOnSubmit(event) {
         event.preventDefault()
-        if (signInUser.email !== "" && signInUser.password !== "") {
-            (SignIn(signInUser.email, signInUser.password))
-        } 
+       await SignIn(signInUser, notify)
     }
 
     return (
@@ -44,6 +49,7 @@ export default function SignInComponent() {
               <button type='submit' onClick={(event) => handleOnSubmit(event)}>Sign in</button>
             </Form>
             <a href='/Login'>Already an account ? Log in</a>
+            <ToastContainer></ToastContainer>
         </>
     )
 }

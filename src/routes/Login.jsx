@@ -42,6 +42,7 @@ export default function Login() {
       <input type="password" name="password" id="password" required value={password} onChange={(event) => setPassword(event.target.value)}></input>
       <button type="submit" onClick={(event) => login(event, email, password)} >"SE CONNECTER"</button>
     </Form>
+    <a href='/signin'>Not have an account ? Sign in</a>
     </HeaderWrapper>
     <ToastContainer></ToastContainer>
   </Wrapper>); 

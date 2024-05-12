@@ -45,8 +45,8 @@ export default function UserProvider({children}) {
         });
     }
 
-    const SignIn = (email, password) => {
-        createUserWithEmailAndPassword(auth, email, password)
+    const SignIn = async ({email, password}, notify) => {
+        await createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
         // Signed up 
         const user = userCredential.user;
@@ -55,13 +55,26 @@ export default function UserProvider({children}) {
         // ...
         })
         .catch((error) => {
-            console.log(error.code);
-            const code = error.code
-            console.log({code});
-            console.log(error.message);
-            const message = error.message
-            console.log({message});
-        // ..
+            let message = error.code
+            console.log(message)
+            switch(error.code) {
+                case "auth/invalid-email":
+                    message = "you have to submit an email and a password"
+                break;
+                case "auth/missing-password":
+                    message = "you have to submit an email and a password"
+                break;
+                case "auth/missing-email":
+                    message = "you have to submit an email and a password"
+                break;
+                case "auth/invalid-credential":
+                    message = "invalid email or password"
+                break;
+                case "auth/email-already-in-use":
+                    message = "this account already exist, you can click on under to log in"
+                break;
+            }
+            return notify(message)
         });
     }
 
