@@ -64,8 +64,18 @@ function TodoProvider({children}) {
         const todoRef = doc(db, "users", user.uid, "todos", todoId)
       
         await updateDoc(todoRef, {
-          completed: !!status // smart way of converting any type to type Boolean
+          completed: !!!status // smart way of converting any type to type Boolean
         })
+    }
+
+    const handleToggleTitle = async (todoId, title) => {
+      const todoRef = doc(db, "users", user.uid, "todos", todoId)
+      console.log(title)
+      await updateDoc(todoRef, {
+        title: title
+      }).then(() => { 
+        console.log({title})
+      })
     }
 
     const handleDelete = async (todoId) => {
@@ -82,7 +92,7 @@ function TodoProvider({children}) {
 
 
     return (<TodoContext.Provider
-      value ={{todos, setTodos, handleTodoInput, handleToggleComplete, handleDelete}}>{children}</TodoContext.Provider>);
+      value ={{todos, setTodos, handleTodoInput, handleToggleComplete, handleDelete, handleToggleTitle}}>{children}</TodoContext.Provider>);
         
 }
 
